@@ -96,6 +96,7 @@ bool addApbChangeCallback(void * arg, apb_change_cb_t cb){
             return false;
         }
         else {
+            log_d("adding apb callback func=%08X arg=%08X",c->cb,c->arg);  // << this line
             c->next = apb_change_callbacks;
             apb_change_callbacks-> prev = c;
             apb_change_callbacks = c;
