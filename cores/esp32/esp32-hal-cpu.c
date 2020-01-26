@@ -91,6 +91,9 @@ bool addApbChangeCallback(void * arg, apb_change_cb_t cb){
         while( (r != NULL ) && !((r->cb == cb) && ( r->arg == arg))) r = r->next;
         if (r) {
             log_e("duplicate func=%08X arg=%08X",c->cb,c->arg);
+            #if (ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_DEBUG)
+            abort();
+            #endif
             free(c);
             xSemaphoreGive(apb_change_lock);
             return false;
@@ -114,6 +117,9 @@ bool removeApbChangeCallback(void * arg, apb_change_cb_t cb){
     while( (r != NULL ) && !((r->cb == cb) && ( r->arg == arg))) r = r->next;
     if ( r == NULL ) {
         log_e("not found func=%08X arg=%08X",cb,arg);
+         #if (ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_DEBUG)
+        abort();
+        #endif
         xSemaphoreGive(apb_change_lock);
         return false;
         }
